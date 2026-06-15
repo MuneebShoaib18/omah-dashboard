@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "sentAt": "2026-05-29T08:33:43.026Z",
+    "status": "Sent",
+    "senderId": "admin-1",
+    "senderName": "Admin User",
+    "recipientType": "direct",
+    "recipientGroup": null,
+    "recipientCount": 1,
+    "recipientSummary": "Priya Singh (priya.singh@buildwise.co)",
+    "subject": "Message from OMAHCONNECT Admin",
+    "body": "Hello,\n\nI am writing to connect with you regarding your recent platform activity. [Add message details here...]\n\nBest regards,\nOMAHCONNECT Admin",
+    "campaignType": "direct"
+  },
+  {
+    "id": 2,
+    "sentAt": "2026-05-29T08:33:43.450Z",
+    "status": "Sent",
+    "senderId": "admin-1",
+    "senderName": "Admin User",
+    "recipientType": "direct",
+    "recipientGroup": null,
+    "recipientCount": 1,
+    "recipientSummary": "Priya Singh (priya.singh@buildwise.co)",
+    "subject": "Message from OMAHCONNECT Admin",
+    "body": "Hello,\n\nI am writing to connect with you regarding your recent platform activity. [Add message details here...]\n\nBest regards,\nOMAHCONNECT Admin",
+    "campaignType": "direct"
+  },
+  {
+    "id": 3,
+    "sentAt": "2026-05-29T08:52:31.048Z",
+    "status": "Sent",
+    "senderId": "admin-1",
+    "senderName": "Admin User",
+    "recipientType": "direct",
+    "recipientGroup": null,
+    "recipientCount": 1,
+    "recipientSummary": "Noah Brooks (noah.brooks@mailwave.com)",
+    "subject": "Message from OMAHCONNECT Admin",
+    "body": "Hello,\n\nI am writing to connect with you regarding your recent platform activity. [Add message details here...]\n\nBest regards,\nOMAHCONNECT Admin",
+    "campaignType": "direct"
+  }
+]

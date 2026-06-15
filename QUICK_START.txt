@@ -1,0 +1,74 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    OMAH CONNECT - QUICK START GUIDE                         ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+THE PROBLEM:
+━━━━━━━━━━━
+"Error Loading Applications - Network Error" appears because the backend 
+server is NOT RUNNING.
+
+THE SOLUTION:
+━━━━━━━━━━━
+You need to start TWO services:
+1. Backend API (Node.js on port 5000)
+2. Frontend (React on port 5173)
+
+STEP-BY-STEP:
+━━━━━━━━━━━
+
+STEP 1: Open Command Prompt / PowerShell
+────────────────────────────────────────
+
+STEP 2: Navigate to project folder
+────────────────────────────────────
+cd c:\Users\munee\OneDrive\Desktop\OMEH
+
+STEP 3: Start Backend Server (Terminal 1)
+──────────────────────────────────────────
+npm start
+
+You should see:
+  🚀 Server running on port 5000
+
+✓ Keep this terminal open!
+
+STEP 4: Open a NEW Terminal/CMD window (Terminal 2)
+───────────────────────────────────────────────────
+cd c:\Users\munee\OneDrive\Desktop\OMEH\omahconnect-admin
+npm run dev
+
+You should see:
+  ➜  Local:   http://localhost:5173/
+
+STEP 5: Open Browser
+────────────────────
+Visit: http://localhost:5173
+
+✓ Applications page should now work!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+KEY POINTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Backend must be running on port 5000 (Terminal 1)
+✓ Frontend runs on port 5173 (Terminal 2)
+✓ Frontend connects to Backend via http://localhost:5000/api
+✓ Keep both terminals open while using the app
+
+TROUBLESHOOTING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problem: Port 5000 already in use
+Solution: npm start --port 5001
+
+Problem: Module not found errors
+Solution: Delete node_modules and reinstall:
+  rmdir node_modules /s /q
+  npm install
+
+Problem: "Cannot find module"
+Solution: Make sure you're in the right folder when running npm install
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Read SETUP.md for more detailed instructions!

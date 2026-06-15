@@ -1,0 +1,29 @@
+{
+  "requireVerificationDocs": true,
+  "autoFilterSpamJobs": true,
+  "allowedDomains": [
+    ".com",
+    ".org",
+    ".net",
+    ".edu",
+    ".co",
+    ".io",
+    ".kr",
+    ".in",
+    ".es",
+    ".ae",
+    ".cn",
+    ".ca"
+  ],
+  "minTrustScoreToPost": 60,
+  "spamKeywords": [
+    "crypto",
+    "fast cash",
+    "quick cash",
+    "guaranteed payout",
+    "no experience",
+    "earn from home",
+    "wire transfer",
+    "deposit fee"
+  ]
+}
