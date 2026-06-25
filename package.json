@@ -3,15 +3,18 @@
     "start": "node server.js",
     "dev": "node server.js",
     "install:mongodb": "powershell -ExecutionPolicy Bypass -File scripts/install-mongodb.ps1",
-    "mongodb": "powershell -ExecutionPolicy Bypass -File scripts/start-mongodb.ps1"
+    "mongodb": "powershell -ExecutionPolicy Bypass -File scripts/start-mongodb.ps1",
+    "hash-passwords": "node scripts/hash-passwords.js"
   },
   "dependencies": {
     "axios": "^1.16.1",
+    "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^8.0.0"
+    "mongoose": "^8.0.0",
+    "nodemailer": "^9.0.1"
   }
 }

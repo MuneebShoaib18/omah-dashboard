@@ -72,22 +72,6 @@ export function Sidebar({ activeId, onNavigate }: SidebarProps) {
           })}
         </ul>
       </nav>
-
-      <div className="mx-3 mb-6 rounded-xl bg-[#112240] p-4">
-        <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600/30">
-          <Rocket className="h-4 w-4 text-blue-400" />
-        </div>
-        <p className="text-xs font-semibold text-white">Pro Tip</p>
-        <p className="mt-1 text-xs leading-relaxed text-slate-400">
-          Use Developer Tools to monitor API health and debug issues in real time.
-        </p>
-        <button
-          type="button"
-          className="mt-2 text-xs font-medium text-blue-400 hover:text-blue-300"
-        >
-          Learn more →
-        </button>
-      </div>
     </aside>
   );
 }

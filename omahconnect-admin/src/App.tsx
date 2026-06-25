@@ -13,7 +13,6 @@ import { ApplicationsPage } from "./pages/ApplicationsPage";
 import { ReportsPage } from "./pages/ReportsPage";
 import { DeveloperToolsPage } from "./pages/DeveloperToolsPage";
 import { SettingsPage } from "./pages/SettingsPage";
-import { InternshipApplyPage } from "./pages/InternshipApplyPage";
 import { DialerModal } from "./components/calling/DialerModal";
 import { fetchCurrentUser, type User } from "./services/api";
 
@@ -45,8 +44,8 @@ const pageConfig: Record<
     description: "Review and moderate job postings and internship listings.",
   },
   applications: {
-    title: "Applications",
-    description: "Track and manage job applications across all companies.",
+    title: "Applicants",
+    description: "View and manage all applicants synced from the Google Sheet.",
   },
   reports: {
     title: "Reports",
@@ -71,19 +70,9 @@ const pageConfig: Record<
 function App() {
   const [authLoading, setAuthLoading] = useState(true);
   const [activeNav, setActiveNav] = useState("dashboard");
-  const [isApplyPage, setIsApplyPage] = useState(window.location.hash === "#/apply");
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      setIsApplyPage(window.location.hash === "#/apply");
-    };
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
-
-  // Email campaign redirection states
   const [emailTargetUserId, setEmailTargetUserId] = useState<string | null>(null);
   const [emailCampaignType, setEmailCampaignType] = useState<string | null>(null);
+  const [emailRecipientType, setEmailRecipientType] = useState<"direct" | "applicant" | "bulk">("direct");
 
   // Calling states
   const [callingUser, setCallingUser] = useState<User | null>(null);
@@ -103,25 +92,23 @@ function App() {
     checkAuth();
   }, []);
 
-  const handleTriggerEmail = (userId: string, campaignType: string) => {
-    setEmailTargetUserId(userId);
+  const handleTriggerEmail = (recipientId: string, campaignType: string, recipientType: "direct" | "applicant" | "bulk" = "direct") => {
+    setEmailTargetUserId(recipientId);
     setEmailCampaignType(campaignType);
+    setEmailRecipientType(recipientType);
     setActiveNav("emails");
   };
 
   const handleClearEmailState = () => {
     setEmailTargetUserId(null);
     setEmailCampaignType(null);
+    setEmailRecipientType("direct");
   };
 
   const handleInitiateCall = (user: User, type: 'Standard Call' | 'Emergency Call' | 'Recruiter Support Call') => {
     setCallingUser(user);
     setCallingType(type);
   };
-
-  if (isApplyPage) {
-    return <InternshipApplyPage />;
-  }
 
   if (authLoading) {
     return (
@@ -153,6 +140,7 @@ function App() {
           <EmailsPage
             initialTargetUserId={emailTargetUserId}
             initialCampaignType={emailCampaignType}
+            initialRecipientType={emailRecipientType}
             onClearInitialState={handleClearEmailState}
           />
         ) : activeNav === "communications" ? (
@@ -162,7 +150,7 @@ function App() {
         ) : activeNav === "jobs" ? (
           <JobsPage />
         ) : activeNav === "applications" ? (
-          <ApplicationsPage />
+          <ApplicationsPage onTriggerEmail={handleTriggerEmail} />
         ) : activeNav === "reports" ? (
           <ReportsPage />
         ) : activeNav === "developer" ? (

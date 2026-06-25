@@ -248,6 +248,8 @@ export interface Application {
   education?: string;
   skills?: string;
   portfolioUrl?: string;
+  source?: string;
+  extraFields?: Record<string, string>;
 }
 
 export interface DbSummary {
@@ -470,41 +472,13 @@ export const deleteApplication = async (id: string): Promise<{ success: boolean 
   }
 };
 
-export const syncGoogleSheet = async (sheetUrl: string): Promise<{ success: boolean; addedCount: number }> => {
+export const syncApplicantsSheet = async (sheetUrl?: string): Promise<{ success: boolean; addedCount: number }> => {
   try {
-    const response = await apiClient.post('/applications/sync-sheet', { sheetUrl });
+    const response = await apiClient.post('/applications/sync-sheet', sheetUrl ? { sheetUrl } : {});
     return response.data;
   } catch (error) {
-    console.log('Google Sheet sync failed:', error);
+    console.log('Applicant sheet sync failed:', error);
     return { success: false, addedCount: 0 };
-  }
-};
-
-export const fetchPublicInternships = async (): Promise<Job[]> => {
-  try {
-    const response = await apiClient.get('/public/internships');
-    return response.data.internships;
-  } catch (error) {
-    return [];
-  }
-};
-
-export const submitApplication = async (payload: {
-  jobId: string;
-  userName: string;
-  userEmail: string;
-  phone?: string;
-  education?: string;
-  skills?: string;
-  portfolioUrl?: string;
-  resumeUrl?: string;
-  coverLetter?: string;
-}): Promise<{ success: boolean; application: Application }> => {
-  try {
-    const response = await apiClient.post('/public/applications/submit', payload);
-    return response.data;
-  } catch (error) {
-    return { success: false, application: {} as Application };
   }
 };
 

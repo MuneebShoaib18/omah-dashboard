@@ -57,14 +57,18 @@ const applicationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  extraFields: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
+  },
   source: {
     type: String,
-    enum: ['google-form', 'manual', 'csv', 'api'],
-    default: 'google-form'
+    enum: ['sheet', 'manual', 'api'],
+    default: 'sheet'
   },
   userId: {
     type: String,
-    default: 'google-form-sync'
+    default: 'sheet-sync'
   },
   // Prevent duplicates: same email + date within 24 hours
   syncIdentifier: {

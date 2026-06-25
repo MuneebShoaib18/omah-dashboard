@@ -2,12 +2,30 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
+const nodemailer = require('nodemailer');
 const db = require('./db');
 const mongoConnection = require('./mongoConnection');
 const applicationStore = require('./applicationStore');
+const { authenticateToken } = require('./middleware/auth');
 
 dotenv.config();
+
+// SMTP Transporter configuration for real email sending
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || 'smtp.office365.com',
+  port: parseInt(process.env.SMTP_PORT || '587', 10),
+  secure: process.env.SMTP_SECURE === 'true', // true for port 465, false for 587
+  auth: {
+    user: process.env.SMTP_USER || '',
+    pass: process.env.SMTP_PASS || '',
+  },
+  tls: {
+    ciphers: 'SSLv3',
+    rejectUnauthorized: false
+  }
+});
 
 const app = express();
 
@@ -27,21 +45,6 @@ app.use(cookieParser());
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_fallback_secret_key';
 
-// Helper to authenticate requests (middleware - auto-resolves admin-1 in local environment)
-async function authenticateToken(req, res, next) {
-  try {
-    const user = await db.getUserById('admin-1');
-    if (!user) {
-      return res.status(404).json({ success: false, error: 'Default admin user not found' });
-    }
-    req.user = user;
-    return next();
-  } catch (error) {
-    console.error('Authentication error:', error);
-    return res.status(500).json({ success: false, error: 'Authentication middleware error' });
-  }
-}
-
 /* =========================
    AUTHENTICATION ENDPOINTS
 ========================= */
@@ -59,10 +62,12 @@ app.post('/api/auth/signup', async (req, res) => {
       return res.status(400).json({ success: false, error: 'Email already registered' });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 12);
+
     const newUser = await db.createUser({
       name,
       email,
-      password,
+      password: hashedPassword,
       role: role || 'User'
     });
 
@@ -100,7 +105,8 @@ app.post('/api/auth/login', async (req, res) => {
     }
 
     const user = await db.getUserByEmail(email);
-    if (!user || user.password !== password) {
+    const passwordMatch = user && (await bcrypt.compare(password, user.password));
+    if (!passwordMatch) {
       return res.status(400).json({ success: false, error: 'Invalid email or password' });
     }
 
@@ -234,10 +240,25 @@ app.post('/api/emails/send', authenticateToken, async (req, res) => {
     let recipients = [];
     let recipientNameSummary = '';
 
-    if (recipientType === 'direct') {
-      const targetUser = allUsers.find(u => u.id === recipientId);
+    if (recipientType === 'direct' || recipientType === 'applicant') {
+      let targetUser = null;
+      if (recipientType === 'direct') {
+        targetUser = allUsers.find(u => u.id === recipientId);
+      } else if (recipientType === 'applicant') {
+        const applications = await applicationStore.getAllApplications();
+        const targetApp = applications.find(a => a.id === recipientId);
+        if (targetApp) {
+          targetUser = {
+            id: targetApp.id,
+            name: targetApp.userName,
+            email: targetApp.userEmail,
+            role: 'Applicant'
+          };
+        }
+      }
+
       if (!targetUser) {
-        return res.status(404).json({ success: false, error: 'Recipient user not found' });
+        return res.status(404).json({ success: false, error: `Recipient ${recipientType} not found` });
       }
       recipients = [targetUser];
       recipientNameSummary = `${targetUser.name} (${targetUser.email})`;
@@ -280,18 +301,43 @@ app.post('/api/emails/send', authenticateToken, async (req, res) => {
       campaignType
     });
 
-    // Simulate sending in the console log
-    console.log(`\n========================================`);
-    console.log(`📧 SIMULATING EMAIL CAMPAIGN: [${campaignType.toUpperCase()}]`);
-    console.log(`From: ${req.user.name} <${req.user.email}>`);
-    console.log(`To (${recipients.length} recipients): ${recipientNameSummary}`);
-    console.log(`Subject: ${subject}`);
-    console.log(`Body:\n${body}`);
-    console.log(`========================================\n`);
+    // Send email via Nodemailer if credentials are set
+    const useRealSMTP = process.env.SMTP_USER && process.env.SMTP_PASS;
+    if (useRealSMTP) {
+      try {
+        console.log(`✉️ Sending real emails using SMTP: ${process.env.SMTP_HOST || 'smtp.office365.com'}...`);
+        for (const recipient of recipients) {
+          await transporter.sendMail({
+            from: `"${req.user.name}" <${process.env.SMTP_USER}>`,
+            to: recipient.email,
+            subject: subject,
+            text: body
+          });
+        }
+        console.log(`✅ SMTP Mail sent successfully to ${recipients.length} recipients.`);
+      } catch (smtpError) {
+        console.error('❌ SMTP Mail delivery failed:', smtpError.message);
+        return res.status(500).json({
+          success: false,
+          error: `Real email sending failed: ${smtpError.message}. Make sure SMTP AUTH is enabled for this mailbox in Microsoft 365 Admin Center.`
+        });
+      }
+    } else {
+      // Simulate sending in the console log
+      console.log(`\n========================================`);
+      console.log(`📧 SIMULATING EMAIL CAMPAIGN: [${campaignType.toUpperCase()}]`);
+      console.log(`From: ${req.user.name} <${req.user.email}>`);
+      console.log(`To (${recipients.length} recipients): ${recipientNameSummary}`);
+      console.log(`Subject: ${subject}`);
+      console.log(`Body:\n${body}`);
+      console.log(`========================================\n`);
+    }
 
     return res.json({
       success: true,
-      message: `Successfully simulated campaign. Sent ${recipients.length} emails.`,
+      message: useRealSMTP
+        ? `Successfully sent ${recipients.length} real email(s).`
+        : `Successfully simulated campaign. Sent ${recipients.length} emails.`,
       emailRecord
     });
 
@@ -962,6 +1008,38 @@ app.post('/api/applications/:id/delete', authenticateToken, async (req, res) => 
   }
 });
 
+// Default applicant responses sheet (publish to web as CSV for sync to work)
+const DEFAULT_APPLICANT_SHEET_CSV_URL =
+  'https://docs.google.com/spreadsheets/d/19T3MgIa_iDzybzLneCqXYIbATxOuL644xqKtYuZUvbY/export?format=csv&gid=961207793';
+
+function normalizeSheetCsvUrl(url) {
+  if (!url) return DEFAULT_APPLICANT_SHEET_CSV_URL;
+  const trimmed = url.trim();
+  const sheetIdMatch = trimmed.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+  if (!sheetIdMatch) return trimmed;
+  const gidMatch = trimmed.match(/[#&?]gid=(\d+)/);
+  const gid = gidMatch ? gidMatch[1] : '0';
+  return `https://docs.google.com/spreadsheets/d/${sheetIdMatch[1]}/export?format=csv&gid=${gid}`;
+}
+
+function getMappedColumnIndices(headers) {
+  const find = (...patterns) =>
+    headers.findIndex((h) => patterns.some((p) => h.includes(p)));
+
+  return {
+    timestamp: find('timestamp'),
+    email: find('email', 'e-mail', 'mail address'),
+    name: headers.findIndex((h) => h.includes('name') && !h.includes('company') && !h.includes('user name')),
+    phone: find('phone', 'contact number', 'mobile'),
+    education: find('education', 'school', 'university', 'college'),
+    skills: find('skill'),
+    portfolio: find('portfolio', 'linkedin', 'website', 'github'),
+    resume: find('resume', 'cv', 'upload'),
+    coverLetter: find('cover', 'letter', 'purpose', 'statement', 'why'),
+    position: find('position', 'job', 'role', 'interest', 'internship'),
+  };
+}
+
 // CSV parser helper for Google Sheets
 function parseCSV(text) {
   const lines = [];
@@ -993,11 +1071,14 @@ function parseCSV(text) {
   return lines;
 }
 
-// Sync Google Form responses from Google Sheets CSV
-async function syncFormResponsesFromSheet(sheetUrl) {
-  const response = await fetch(sheetUrl);
+// Sync applicants from Google Sheets CSV
+async function syncApplicantsFromSheet(sheetUrl) {
+  const csvUrl = normalizeSheetCsvUrl(sheetUrl);
+  const response = await fetch(csvUrl);
   if (!response.ok) {
-    throw new Error('Failed to fetch the Google Sheet CSV. Make sure it is published to the web as CSV.');
+    throw new Error(
+      'Failed to fetch the Google Sheet CSV. Open the sheet → File → Share → Publish to web → select this tab → Comma-separated values (.csv).'
+    );
   }
 
   const csvText = await response.text();
@@ -1007,33 +1088,28 @@ async function syncFormResponsesFromSheet(sheetUrl) {
     throw new Error('The CSV has no data rows.');
   }
 
-  const headers = rows[0].map(h => h.toLowerCase().trim());
+  const rawHeaders = rows[0].map((h) => h.trim());
+  const headers = rawHeaders.map((h) => h.toLowerCase().trim());
+  const cols = getMappedColumnIndices(headers);
 
-  const timestampIdx = headers.findIndex(h => h.includes('timestamp'));
-  const emailIdx = headers.findIndex(h => h.includes('email') || h.includes('mail'));
-  const nameIdx = headers.findIndex(h => h.includes('name'));
-  const phoneIdx = headers.findIndex(h => h.includes('phone') || h.includes('contact'));
-  const educationIdx = headers.findIndex(h => h.includes('education') || h.includes('school') || h.includes('university'));
-  const skillsIdx = headers.findIndex(h => h.includes('skill'));
-  const portfolioIdx = headers.findIndex(h => h.includes('portfolio') || h.includes('linkedin') || h.includes('website') || h.includes('github'));
-  const resumeIdx = headers.findIndex(h => h.includes('resume') || h.includes('cv') || h.includes('upload'));
-  const coverLetterIdx = headers.findIndex(h => h.includes('cover') || h.includes('letter') || h.includes('purpose') || h.includes('statement'));
-  const positionIdx = headers.findIndex(h => h.includes('position') || h.includes('job') || h.includes('role') || h.includes('interest'));
-
-  if (emailIdx === -1 || nameIdx === -1) {
+  if (cols.email === -1 || cols.name === -1) {
     throw new Error('Could not find columns for Email or Name. Check your Sheet headers.');
   }
+
+  const mappedIndices = new Set(
+    Object.values(cols).filter((idx) => idx !== -1)
+  );
 
   let addedCount = 0;
   const jobs = await db.getJobs();
 
   for (let i = 1; i < rows.length; i++) {
     const row = rows[i];
-    if (!row || row.length === 0 || !row[emailIdx]) continue;
+    if (!row || row.length === 0 || !row[cols.email]) continue;
 
-    const email = row[emailIdx].trim();
-    const name = row[nameIdx].trim();
-    const rawTimestamp = timestampIdx !== -1 && row[timestampIdx] ? row[timestampIdx].trim() : '';
+    const email = row[cols.email].trim();
+    const name = row[cols.name].trim();
+    const rawTimestamp = cols.timestamp !== -1 && row[cols.timestamp] ? row[cols.timestamp].trim() : '';
 
     let appliedDate = new Date().toISOString().split('T')[0];
     if (rawTimestamp) {
@@ -1043,19 +1119,30 @@ async function syncFormResponsesFromSheet(sheetUrl) {
       }
     }
 
-    const phone = phoneIdx !== -1 && row[phoneIdx] ? row[phoneIdx].trim() : '';
-    const education = educationIdx !== -1 && row[educationIdx] ? row[educationIdx].trim() : '';
-    const skills = skillsIdx !== -1 && row[skillsIdx] ? row[skillsIdx].trim() : '';
-    const portfolioUrl = portfolioIdx !== -1 && row[portfolioIdx] ? row[portfolioIdx].trim() : '';
-    const resumeUrl = resumeIdx !== -1 && row[resumeIdx] ? row[resumeIdx].trim() : 'https://omahconnect.com/resumes/default_resume.pdf';
-    const coverLetter = coverLetterIdx !== -1 && row[coverLetterIdx] ? row[coverLetterIdx].trim() : '';
-    const rawPosition = positionIdx !== -1 && row[positionIdx] ? row[positionIdx].trim() : 'Internship Candidate';
+    const phone = cols.phone !== -1 && row[cols.phone] ? row[cols.phone].trim() : '';
+    const education = cols.education !== -1 && row[cols.education] ? row[cols.education].trim() : '';
+    const skills = cols.skills !== -1 && row[cols.skills] ? row[cols.skills].trim() : '';
+    const portfolioUrl = cols.portfolio !== -1 && row[cols.portfolio] ? row[cols.portfolio].trim() : '';
+    const resumeUrl = cols.resume !== -1 && row[cols.resume] ? row[cols.resume].trim() : '';
+    const coverLetter = cols.coverLetter !== -1 && row[cols.coverLetter] ? row[cols.coverLetter].trim() : '';
+    const rawPosition = cols.position !== -1 && row[cols.position] ? row[cols.position].trim() : 'Applicant';
 
-    let jobId = 'j-google-form';
+    const extraFields = {};
+    for (let j = 0; j < rawHeaders.length; j++) {
+      const value = row[j] ? row[j].trim() : '';
+      if (!value || mappedIndices.has(j)) continue;
+      extraFields[rawHeaders[j]] = value;
+    }
+
+    let jobId = 'j-sheet';
     let jobTitle = rawPosition;
-    let companyName = 'OMAHCONNECT Partner';
+    let companyName = 'OMAHCONNECT';
 
-    const matchedJob = jobs.find(j => j.title.toLowerCase().includes(rawPosition.toLowerCase()) || rawPosition.toLowerCase().includes(j.title.toLowerCase()));
+    const matchedJob = jobs.find(
+      (j) =>
+        j.title.toLowerCase().includes(rawPosition.toLowerCase()) ||
+        rawPosition.toLowerCase().includes(j.title.toLowerCase())
+    );
     if (matchedJob) {
       jobId = matchedJob.id;
       jobTitle = matchedJob.title;
@@ -1075,13 +1162,14 @@ async function syncFormResponsesFromSheet(sheetUrl) {
       jobTitle,
       companyName,
       appliedDate,
+      extraFields,
     });
 
     if (created) addedCount++;
   }
 
   const settings = await db.getCompanySettings();
-  settings.googleSheetSyncUrl = sheetUrl;
+  settings.applicantSheetUrl = csvUrl;
   await db.saveCompanySettings(settings);
 
   return addedCount;
@@ -1089,26 +1177,35 @@ async function syncFormResponsesFromSheet(sheetUrl) {
 
 app.post('/api/applications/sync-sheet', authenticateToken, async (req, res) => {
   try {
-    const { sheetUrl } = req.body;
-    if (!sheetUrl) {
-      return res.status(400).json({ success: false, error: 'Google Sheet CSV URL is required.' });
-    }
-
-    const addedCount = await syncFormResponsesFromSheet(sheetUrl);
+    const sheetUrl = req.body.sheetUrl || process.env.APPLICANT_SHEET_CSV_URL || DEFAULT_APPLICANT_SHEET_CSV_URL;
+    const addedCount = await syncApplicantsFromSheet(sheetUrl);
 
     await db.saveCompanyLog({
       adminId: req.user.id,
       adminName: req.user.name,
-      action: `Synchronized Google Sheet form responses. Imported [${addedCount}] new applications.`,
+      action: `Synchronized applicant sheet. Imported [${addedCount}] new applicant(s).`,
       targetType: 'applications_sync',
       targetId: 'sync_' + Date.now(),
-      targetName: 'Google Sheets Integration'
+      targetName: 'Google Sheets Applicants'
     });
 
     return res.json({ success: true, addedCount });
   } catch (error) {
-    console.error('Google Sheet sync error:', error);
-    return res.status(500).json({ success: false, error: 'Server error during Google Sheet synchronization: ' + error.message });
+    console.error('Applicant sheet sync error:', error);
+    return res.status(500).json({ success: false, error: 'Server error during sheet synchronization: ' + error.message });
+  }
+});
+
+app.get('/api/applications/sheet-config', authenticateToken, async (req, res) => {
+  try {
+    const settings = await db.getCompanySettings();
+    const sheetUrl =
+      settings.applicantSheetUrl ||
+      process.env.APPLICANT_SHEET_CSV_URL ||
+      DEFAULT_APPLICANT_SHEET_CSV_URL;
+    return res.json({ success: true, sheetUrl: normalizeSheetCsvUrl(sheetUrl) });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: 'Failed to load sheet config' });
   }
 });
 
@@ -1123,83 +1220,15 @@ app.get('/api/dev/db-summary', authenticateToken, async (req, res) => {
   }
 });
 
-/* =========================
-   PUBLIC CANDIDATE ENDPOINTS
-========================= */
-
-// Get active internships (public)
-app.get('/api/public/internships', async (req, res) => {
-  try {
-    const jobs = await db.getJobs();
-    const internships = jobs.filter(j => j.type === 'Internship' && j.status === 'active');
-    return res.json({ success: true, internships });
-  } catch (error) {
-    console.error('Fetch public internships error:', error);
-    return res.status(500).json({ success: false, error: 'Server error fetching internships' });
-  }
-});
-
-// Submit application (public)
-app.post('/api/public/applications/submit', async (req, res) => {
-  try {
-    const { jobId, userName, userEmail, phone, education, skills, portfolioUrl, resumeUrl, coverLetter } = req.body;
-    
-    if (!jobId || !userName || !userEmail) {
-      return res.status(400).json({ success: false, error: 'Job ID, Full Name, and Email are required fields.' });
-    }
-
-    const jobs = await db.getJobs();
-    const job = jobs.find(j => j.id === jobId);
-    if (!job) {
-      return res.status(404).json({ success: false, error: 'Selected internship position not found.' });
-    }
-
-    const newApplication = await applicationStore.createApplication({
-      name: userName,
-      email: userEmail,
-      phone,
-      education,
-      skills,
-      portfolioUrl,
-      resumeUrl: resumeUrl || 'https://omahconnect.com/resumes/default_resume.pdf',
-      coverLetter,
-      jobId,
-      jobTitle: job.title,
-      companyName: job.companyName,
-      source: 'api',
-      userId: 'candidate',
-    });
-
-    job.applicantCount = (job.applicantCount || 0) + 1;
-    await db.saveJobs(jobs);
-
-    await db.saveCompanyLog({
-      adminId: 'system',
-      adminName: 'Public Candidate Form',
-      action: `New internship application submitted by candidate [${userName}] for [${job.title}] at [${job.companyName}]`,
-      targetType: 'application',
-      targetId: newApplication.id,
-      targetName: `${userName} - ${job.title}`
-    });
-
-    return res.json({ success: true, application: newApplication });
-  } catch (error) {
-    console.error('Submit application error:', error);
-    return res.status(500).json({ success: false, error: 'Server error submitting application' });
-  }
-});
-
 async function startServer() {
   await applicationStore.init(mongoConnection);
 
-  const sheetUrl = process.env.GOOGLE_FORM_SHEET_CSV_URL;
-  if (sheetUrl) {
-    try {
-      const added = await syncFormResponsesFromSheet(sheetUrl);
-      console.log(`📋 Google Form sync: imported ${added} new response(s)`);
-    } catch (error) {
-      console.warn('⚠️  Google Form auto-sync skipped:', error.message);
-    }
+  const sheetUrl = process.env.APPLICANT_SHEET_CSV_URL || DEFAULT_APPLICANT_SHEET_CSV_URL;
+  try {
+    const added = await syncApplicantsFromSheet(sheetUrl);
+    console.log(`📋 Applicant sheet sync: imported ${added} new applicant(s)`);
+  } catch (error) {
+    console.warn('⚠️  Applicant sheet auto-sync skipped:', error.message);
   }
 
   const PORT = process.env.PORT || 5000;

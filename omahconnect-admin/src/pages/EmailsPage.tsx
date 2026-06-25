@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { fetchUsers, fetchEmails, sendEmail, type User, type EmailRecord } from "../services/api";
+import { fetchUsers, fetchEmails, sendEmail, fetchApplications, type User, type EmailRecord, type Application } from "../services/api";
 import { Header } from "../components/layout/Header";
 import { Send, History, Mail, AlertTriangle, CheckCircle2, UserCheck } from "lucide-react";
 
 interface EmailsPageProps {
   initialTargetUserId?: string | null;
   initialCampaignType?: string | null;
+  initialRecipientType?: "direct" | "applicant" | "bulk";
   onClearInitialState?: () => void;
 }
 
@@ -34,8 +35,9 @@ const TEMPLATES = {
 
 type TemplateKey = keyof typeof TEMPLATES;
 
-export function EmailsPage({ initialTargetUserId, initialCampaignType, onClearInitialState }: EmailsPageProps) {
+export function EmailsPage({ initialTargetUserId, initialCampaignType, initialRecipientType, onClearInitialState }: EmailsPageProps) {
   const [users, setUsers] = useState<User[]>([]);
+  const [applicants, setApplicants] = useState<Application[]>([]);
   const [emails, setEmails] = useState<EmailRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [composerLoading, setComposerLoading] = useState(false);
@@ -43,7 +45,7 @@ export function EmailsPage({ initialTargetUserId, initialCampaignType, onClearIn
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   // Composer Form States
-  const [recipientType, setRecipientType] = useState<"direct" | "bulk">("direct");
+  const [recipientType, setRecipientType] = useState<"direct" | "applicant" | "bulk">("direct");
   const [recipientId, setRecipientId] = useState("");
   const [recipientGroup, setRecipientGroup] = useState<"all" | "students" | "professionals" | "verified" | "unverified">("all");
   const [campaignType, setCampaignType] = useState<TemplateKey>("direct");
@@ -53,13 +55,22 @@ export function EmailsPage({ initialTargetUserId, initialCampaignType, onClearIn
   useEffect(() => {
     async function loadData() {
       try {
-        const [usersData, emailsData] = await Promise.all([fetchUsers(), fetchEmails()]);
+        const [usersData, emailsData, applicantsData] = await Promise.all([
+          fetchUsers(),
+          fetchEmails(),
+          fetchApplications()
+        ]);
         setUsers(usersData);
         setEmails(emailsData);
+        setApplicants(applicantsData);
 
         // Prepopulate if initial state exists
         if (initialTargetUserId) {
-          setRecipientType("direct");
+          if (initialRecipientType) {
+            setRecipientType(initialRecipientType);
+          } else {
+            setRecipientType("direct");
+          }
           setRecipientId(initialTargetUserId);
         }
         if (initialCampaignType && TEMPLATES[initialCampaignType as TemplateKey]) {
@@ -78,7 +89,7 @@ export function EmailsPage({ initialTargetUserId, initialCampaignType, onClearIn
       }
     }
     loadData();
-  }, [initialTargetUserId, initialCampaignType]);
+  }, [initialTargetUserId, initialCampaignType, initialRecipientType]);
 
   // Handle template selection
   const handleTemplateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -96,8 +107,8 @@ export function EmailsPage({ initialTargetUserId, initialCampaignType, onClearIn
     setSuccessMsg(null);
     setComposerLoading(true);
 
-    if (recipientType === "direct" && !recipientId) {
-      setError("Please select a direct recipient user.");
+    if ((recipientType === "direct" || recipientType === "applicant") && !recipientId) {
+      setError(`Please select a direct recipient ${recipientType}.`);
       setComposerLoading(false);
       return;
     }
@@ -111,7 +122,7 @@ export function EmailsPage({ initialTargetUserId, initialCampaignType, onClearIn
     try {
       const result = await sendEmail({
         recipientType,
-        recipientId: recipientType === "direct" ? recipientId : undefined,
+        recipientId: (recipientType === "direct" || recipientType === "applicant") ? recipientId : undefined,
         recipientGroup: recipientType === "bulk" ? recipientGroup : undefined,
         subject,
         body,
@@ -201,10 +212,11 @@ export function EmailsPage({ initialTargetUserId, initialCampaignType, onClearIn
                 </label>
                 <select
                   value={recipientType}
-                  onChange={(e) => setRecipientType(e.target.value as "direct" | "bulk")}
+                  onChange={(e) => setRecipientType(e.target.value as "direct" | "applicant" | "bulk")}
                   className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-3 text-xs text-slate-700 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all"
                 >
                   <option value="direct">Single User (Direct Email)</option>
+                  <option value="applicant">Single Applicant (Direct Email)</option>
                   <option value="bulk">Bulk Group (Campaign)</option>
                 </select>
               </div>
@@ -223,6 +235,24 @@ export function EmailsPage({ initialTargetUserId, initialCampaignType, onClearIn
                     {users.map((u) => (
                       <option key={u.id} value={u.id}>
                         {u.name} ({u.email} - {u.role})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : recipientType === "applicant" ? (
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                    Select Applicant
+                  </label>
+                  <select
+                    value={recipientId}
+                    onChange={(e) => setRecipientId(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-3 text-xs text-slate-700 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all"
+                  >
+                    <option value="">-- Choose Applicant --</option>
+                    {applicants.map((a) => (
+                      <option key={a.id} value={a.id}>
+                        {a.userName} ({a.userEmail} - {a.jobTitle})
                       </option>
                     ))}
                   </select>

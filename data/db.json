@@ -3,7 +3,7 @@
     {
       "id": "admin-1",
       "email": "admin@omahconnect.com",
-      "password": "password123",
+      "password": "$2b$12$EASGdbd.5OTQlRo0FLx9m.X1qwsbKp889uIzKd/vnBo3Fj/f55sji",
       "name": "Admin User",
       "role": "Super Admin",
       "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
@@ -31,7 +31,7 @@
     {
       "id": "u1",
       "email": "amina@youthconnect.io",
-      "password": "password123",
+      "password": "$2b$12$7M9VqCxJUgINDIMfE4NYY.X9xkXDxITk7Y5CwU37xQ86nhz9LAwzi",
       "name": "Amina Yusuf",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
@@ -59,7 +59,7 @@
     {
       "id": "u2",
       "email": "david.kim@talentnova.com",
-      "password": "password123",
+      "password": "$2b$12$Ll3d1S2r9z7i.08oU.K5BuykCCWJsmSfgeyQ6d0MyVCIBh..tny56",
       "name": "David Kim",
       "role": "Recruiter",
       "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
@@ -88,7 +88,7 @@
     {
       "id": "u3",
       "email": "priya.singh@buildwise.co",
-      "password": "password123",
+      "password": "$2b$12$kiMIcMNTkH50YngvF96DPuzkeCGtPmx3Eqnf3lLqarBJAmIVH3rL2",
       "name": "Priya Singh",
       "role": "Employer",
       "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
@@ -117,7 +117,7 @@
     {
       "id": "u4",
       "email": "noah.brooks@mailwave.com",
-      "password": "password123",
+      "password": "$2b$12$RGmtBzDkAZInd.g2e9HohufT433hTrp5ouWxHkQe4DWWPcHGn.VEC",
       "name": "Noah Brooks",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
@@ -145,7 +145,7 @@
     {
       "id": "u5",
       "email": "sofia.alvarez@hireloop.com",
-      "password": "password123",
+      "password": "$2b$12$lNeWklXyO1sZQR8hSTLug.MvGaK1MUIWpA5P8n2G.Oe4R6HPu4jTq",
       "name": "Sofia Alvarez",
       "role": "Recruiter",
       "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
@@ -174,7 +174,7 @@
     {
       "id": "u6",
       "email": "john.doe@edu.org",
-      "password": "password123",
+      "password": "$2b$12$Hmx4bFKWXP6Ldca5Oab10eSnm7un6775znyTcQGaczn468uIDRi7q",
       "name": "John Doe",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&h=150&fit=crop&crop=face",
@@ -202,7 +202,7 @@
     {
       "id": "u7",
       "email": "yuki.sato@creative.jp",
-      "password": "password123",
+      "password": "$2b$12$VEyfA/z60iptKDpNSqvZZOhlPBiJq6G80SYyL0Hd9r4knOA6nGyDG",
       "name": "Yuki Sato",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
@@ -230,7 +230,7 @@
     {
       "id": "u8",
       "email": "fatima.al@techcorp.ae",
-      "password": "password123",
+      "password": "$2b$12$oIozwuJXl4FEMDzY9EM1N.CXeKuxuHRFiHZvXZytrgFdpDxdym6TW",
       "name": "Fatima Al-Mansoori",
       "role": "Employer",
       "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face",
@@ -259,7 +259,7 @@
     {
       "id": "u9",
       "email": "carlos.m@estudiante.es",
-      "password": "password123",
+      "password": "$2b$12$QP4IoNqSX2phksQT3XBkYO6gRdnn8EizSSFcclS92BItZMTtwxu6m",
       "name": "Carlos Mendez",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop&crop=face",
@@ -287,7 +287,7 @@
     {
       "id": "u10",
       "email": "li.wei@huawei.cn",
-      "password": "password123",
+      "password": "$2b$12$r4PpVXlwNTlEsyBaPtiGF.VWab0QVY9nDCJY8KwFCtftL5qqfyGSS",
       "name": "Li Wei",
       "role": "Recruiter",
       "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face",
@@ -316,7 +316,7 @@
     {
       "id": "u11",
       "email": "chloe.dupont@sorbonne.fr",
-      "password": "password123",
+      "password": "$2b$12$kadPviW96Hy949zgmnheyOt7DMNIUD6gjhg49d1Tg4eHL8nMMDiai",
       "name": "Chloe Dupont",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face",
@@ -344,7 +344,7 @@
     {
       "id": "u12",
       "email": "mwangi.k@safari.ke",
-      "password": "password123",
+      "password": "$2b$12$.ESJmT8EHimEKT1BAcpg4ueOHIoUieTaPct60SfHs4wKOQETJtN16",
       "name": "Kenneth Mwangi",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=150&h=150&fit=crop&crop=face",
@@ -372,7 +372,7 @@
     {
       "id": "u13",
       "email": "elena.p@phys.it",
-      "password": "password123",
+      "password": "$2b$12$Ce3gZDMTKSRIquukd7Nn9eo5TxTOLckgLHKRPmpD7DuSzp28qSfra",
       "name": "Elena Pozzi",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1548142813-c348350df52b?w=150&h=150&fit=crop&crop=face",
@@ -400,7 +400,7 @@
     {
       "id": "u14",
       "email": "aravind.n@tech.in",
-      "password": "password123",
+      "password": "$2b$12$rm1BpILORKB0LfiGUFK3qeqXDVFUI1rW7.lUY72PCWb0iNlrGaVpa",
       "name": "Aravind Nair",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face",
@@ -428,7 +428,7 @@
     {
       "id": "u15",
       "email": "olivia.w@media.uk",
-      "password": "password123",
+      "password": "$2b$12$SjxYQ2iZoKiULxHzlfkHrO9fYQNBOpon2krfiacp9qitl6M2dMXkW",
       "name": "Olivia Wright",
       "role": "Employer",
       "avatar": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&h=150&fit=crop&crop=face",
@@ -457,7 +457,7 @@
     {
       "id": "u16",
       "email": "hans.m@berlin.de",
-      "password": "password123",
+      "password": "$2b$12$LCCebSIocscOifAj8eChoOaBw/J0/4nQmc4ANJFsDhei90dY.37JK",
       "name": "Hans Muller",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face",
@@ -485,7 +485,7 @@
     {
       "id": "u17",
       "email": "ana.silva@porto.pt",
-      "password": "password123",
+      "password": "$2b$12$9SGH/ZfI4kLm5lFI0R8IVugw9P5fPxCn9yaDnvNe23tLUfKhYUVku",
       "name": "Ana Silva",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=150&h=150&fit=crop&crop=face",
@@ -513,7 +513,7 @@
     {
       "id": "u18",
       "email": "ali.reza@shiraz.ir",
-      "password": "password123",
+      "password": "$2b$12$AvdP6ohuXesFlKVJ8etsUeC7A1E6L0BhlVGpsEJgJhtFjx6dchmpy",
       "name": "Ali Reza",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&h=150&fit=crop&crop=face",
@@ -541,7 +541,7 @@
     {
       "id": "u19",
       "email": "lucas.d@toronto.ca",
-      "password": "password123",
+      "password": "$2b$12$L2PUpvosyViTOxYUImbxculqqFGD/K59H4cVJBegoFwUNqkXMjbDW",
       "name": "Lucas Dubois",
       "role": "Recruiter",
       "avatar": "https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?w=150&h=150&fit=crop&crop=face",
@@ -570,7 +570,7 @@
     {
       "id": "u20",
       "email": "tanya.k@yandex.ru",
-      "password": "password123",
+      "password": "$2b$12$SrsnR.J7HwN58YdzfcXxG.GpqxAA/YyTwX9O5s7ijKEEwVOQK8d/y",
       "name": "Tanya Kozlova",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1554151228-14d9def656e4?w=150&h=150&fit=crop&crop=face",
@@ -598,7 +598,7 @@
     {
       "id": "u21",
       "email": "sam.a@sydney.au",
-      "password": "password123",
+      "password": "$2b$12$7asoi/GMqP0N/LVkew2z7es7gEg8Z/8tVFdFJXlc4NEFlBWQQGekG",
       "name": "Samuel Adams",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1500048993953-d23a436266cf?w=150&h=150&fit=crop&crop=face",
@@ -626,7 +626,7 @@
     {
       "id": "u22",
       "email": "fatoumata.d@dakar.sn",
-      "password": "password123",
+      "password": "$2b$12$XQZtYLV74rcx8OvD3NHHwec1pAKVtBETl0zm73BoXwNzkl5.D2Z3u",
       "name": "Fatoumata Diallo",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=150&h=150&fit=crop&crop=face",
@@ -654,7 +654,7 @@
     {
       "id": "u23",
       "email": "gabriel.s@saopaulo.br",
-      "password": "password123",
+      "password": "$2b$12$xSYwxmjUo3V741TPPx9fkuHfTCMnngfQFqXlT85OUTg2eDmRbKp8m",
       "name": "Gabriel Santos",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face",
@@ -682,7 +682,7 @@
     {
       "id": "u24",
       "email": "zara.khan@lahore.pk",
-      "password": "password123",
+      "password": "$2b$12$uroHAsmxpEoyxqqjxwMJ.OTmANtUnaZqzgE8tx0UnmiFVk9QA2gsa",
       "name": "Zara Khan",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face",
@@ -710,7 +710,7 @@
     {
       "id": "u25",
       "email": "william.t@melbourne.au",
-      "password": "password123",
+      "password": "$2b$12$DzMPG6Y4mHyDrmMK/x2lSOhvqQtRZioVfkcJ53fwVKWp/Ro24SesC",
       "name": "William Taylor",
       "role": "User",
       "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&h=150&fit=crop&crop=face",
@@ -753,7 +753,7 @@
       "bio": "",
       "name": "Muneeb",
       "email": "muneebshoaib2005@gmail.com",
-      "password": "darksouls@1_",
+      "password": "$2b$12$D9VTkZrTiaMXd1XcIX0bDeei.UHnCqS1ufTNutI6DXFSIROjRixkG",
       "role": "User",
       "phone": "+1 (555) 019-026",
       "emergencyPhone": "+1 (555) 911-026",

@@ -38,7 +38,8 @@ function toApiFormat(record) {
       ? new Date(obj.appliedDate).toISOString().split('T')[0]
       : new Date().toISOString().split('T')[0],
     coverLetter: obj.coverLetter || '',
-    source: obj.source || (obj.userId === 'google-form-sync' ? 'google-form' : 'api'),
+    source: obj.source || (obj.userId === 'sheet-sync' ? 'sheet' : 'api'),
+    extraFields: obj.extraFields || {},
   };
 }
 
@@ -61,9 +62,10 @@ function fromJsonRecord(record) {
     jobId: record.jobId || '',
     status: record.status || 'applied',
     appliedDate,
-    source: record.userId === 'google-form-sync' ? 'google-form' : 'manual',
+    source: record.userId === 'sheet-sync' ? 'sheet' : 'manual',
     userId: record.userId || 'candidate',
     syncIdentifier: `${email}_${dateStr}`,
+    extraFields: record.extraFields || {},
   };
 }
 
@@ -86,6 +88,7 @@ function toJsonRecord(payload, existingId) {
     appliedDate,
     coverLetter: payload.coverLetter || '',
     source: payload.source || 'api',
+    extraFields: payload.extraFields || {},
   };
 }
 
@@ -267,9 +270,10 @@ async function createFromSheetRow(rowData) {
       jobId: rowData.jobId || '',
       status: 'applied',
       appliedDate,
-      source: 'google-form',
-      userId: 'google-form-sync',
+      source: 'sheet',
+      userId: 'sheet-sync',
       syncIdentifier,
+      extraFields: rowData.extraFields || {},
     });
     return toApiFormat(doc);
   }
@@ -277,21 +281,22 @@ async function createFromSheetRow(rowData) {
   const apps = await db.getApplications();
   const record = {
     id: `a_sync_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
-    jobId: rowData.jobId || 'j-google-form',
+    jobId: rowData.jobId || 'j-sheet',
     jobTitle: rowData.jobTitle,
     companyName: rowData.companyName,
-    userId: 'google-form-sync',
+    userId: 'sheet-sync',
     userName: rowData.name.trim(),
     userEmail: email,
     phone: rowData.phone || '',
     education: rowData.education || '',
     skills: rowData.skills || '',
     portfolioUrl: rowData.portfolioUrl || '',
-    resumeUrl: rowData.resumeUrl || 'https://omahconnect.com/resumes/default_resume.pdf',
+    resumeUrl: rowData.resumeUrl || '',
     status: 'applied',
     appliedDate: dateStr,
     coverLetter: rowData.coverLetter || '',
-    source: 'google-form',
+    source: 'sheet',
+    extraFields: rowData.extraFields || {},
   };
   apps.push(record);
   await db.saveApplications(apps);

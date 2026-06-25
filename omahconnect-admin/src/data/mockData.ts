@@ -85,7 +85,7 @@ export const kpiCards: KpiCard[] = [
     iconColor: "text-indigo-600",
   },
   {
-    label: "Applications",
+    label: "Applicants",
     value: "18,763",
     change: "+10.2%",
     period: "May 12 - Jun 11, 2025",
@@ -207,7 +207,7 @@ export const navItems = [
   { id: "companies", label: "Companies", icon: "building-2" },
   { id: "posts", label: "Posts", icon: "message-square" },
   { id: "jobs", label: "Jobs & Internships", icon: "briefcase" },
-  { id: "applications", label: "Applications", icon: "file-text" },
+  { id: "applications", label: "Applicants", icon: "file-text" },
   { id: "reports", label: "Reports", icon: "flag" },
   { id: "analytics", label: "Analytics", icon: "bar-chart-3" },
   { id: "developer", label: "Developer Tools", icon: "code-2" },

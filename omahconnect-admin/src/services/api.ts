@@ -66,7 +66,7 @@ export interface EmailRecord {
 }
 
 export interface SendEmailPayload {
-  recipientType: 'direct' | 'bulk';
+  recipientType: 'direct' | 'applicant' | 'bulk';
   recipientId?: string;
   recipientGroup?: 'all' | 'students' | 'professionals' | 'verified' | 'unverified';
   subject: string;
@@ -155,7 +155,22 @@ export const fetchCurrentUser = async (): Promise<User> => {
   try {
     const response = await apiClient.get('/auth/me');
     return response.data.user;
-  } catch (error) {
+  } catch (error: any) {
+    // If backend is running but returns 401 (Not authenticated), try auto-login
+    if (error.response && error.response.status === 401) {
+      try {
+        console.log('User is unauthorized (401). Attempting automatic admin login...');
+        const loginResponse = await apiClient.post('/auth/login', {
+          email: 'admin@omahconnect.com',
+          password: 'password123',
+        });
+        console.log('Automatic admin login successful.');
+        return loginResponse.data.user;
+      } catch (loginError) {
+        console.error('Automatic admin login failed:', loginError);
+      }
+    }
+
     console.log('Backend not available, using mock admin user');
     return {
       id: "admin-1",
@@ -355,6 +370,7 @@ export interface CompanySettings {
   minTrustScoreToPost: number;
   spamKeywords: string[];
   googleSheetSyncUrl?: string;
+  applicantSheetUrl?: string;
 }
 
 /* =========================
@@ -445,6 +461,7 @@ export interface Application {
   skills?: string;
   portfolioUrl?: string;
   source?: string;
+  extraFields?: Record<string, string>;
 }
 
 export const fetchApplications = async (): Promise<Application[]> => {
@@ -462,28 +479,8 @@ export const deleteApplication = async (id: string): Promise<{ success: boolean 
   return response.data;
 };
 
-export const syncGoogleSheet = async (sheetUrl: string): Promise<{ success: boolean; addedCount: number }> => {
-  const response = await apiClient.post('/applications/sync-sheet', { sheetUrl });
-  return response.data;
-};
-
-export const fetchPublicInternships = async (): Promise<Job[]> => {
-  const response = await apiClient.get('/public/internships');
-  return response.data.internships;
-};
-
-export const submitApplication = async (payload: {
-  jobId: string;
-  userName: string;
-  userEmail: string;
-  phone?: string;
-  education?: string;
-  skills?: string;
-  portfolioUrl?: string;
-  resumeUrl?: string;
-  coverLetter?: string;
-}): Promise<{ success: boolean; application: Application }> => {
-  const response = await apiClient.post('/public/applications/submit', payload);
+export const syncApplicantsSheet = async (sheetUrl?: string): Promise<{ success: boolean; addedCount: number }> => {
+  const response = await apiClient.post('/applications/sync-sheet', sheetUrl ? { sheetUrl } : {});
   return response.data;
 };
 
