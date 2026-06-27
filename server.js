@@ -14,7 +14,7 @@ dotenv.config();
 
 // SMTP Transporter configuration for real email sending
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.office365.com',
+  host: process.env.SMTP_HOST || 'smtp.gmail.com',
   port: parseInt(process.env.SMTP_PORT || '587', 10),
   secure: process.env.SMTP_SECURE === 'true', // true for port 465, false for 587
   auth: {
@@ -319,7 +319,7 @@ app.post('/api/emails/send', authenticateToken, async (req, res) => {
         console.error('❌ SMTP Mail delivery failed:', smtpError.message);
         return res.status(500).json({
           success: false,
-          error: `Real email sending failed: ${smtpError.message}. Make sure SMTP AUTH is enabled for this mailbox in Microsoft 365 Admin Center.`
+          error: `Real email sending failed: ${smtpError.message}. If using Gmail, make sure you are using a 16-character App Password (not your regular password) and that 2-Step Verification is enabled.`
         });
       }
     } else {

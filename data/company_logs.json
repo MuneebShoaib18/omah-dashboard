@@ -1,432 +1,52 @@
 [
   {
     "id": "log1",
+    "timestamp": "2026-06-27T18:18:35.585Z",
     "adminId": "admin-1",
     "adminName": "Admin User",
-    "action": "Verified Company Profile",
-    "targetType": "company",
-    "targetId": "c3",
-    "targetName": "TalentNova",
-    "timestamp": "2025-05-25T10:00:00.000Z"
+    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
+    "targetType": "applications_sync",
+    "targetId": "sync_1782584315583",
+    "targetName": "Google Sheets Applicants"
   },
   {
     "id": "log2",
+    "timestamp": "2026-06-27T18:19:40.195Z",
     "adminId": "admin-1",
     "adminName": "Admin User",
-    "action": "Suspended Company Profile",
-    "targetType": "company",
-    "targetId": "c9",
-    "targetName": "FraudInc",
-    "timestamp": "2025-05-26T14:30:00.000Z"
+    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
+    "targetType": "applications_sync",
+    "targetId": "sync_1782584380194",
+    "targetName": "Google Sheets Applicants"
   },
   {
     "id": "log3",
+    "timestamp": "2026-06-27T18:19:40.203Z",
     "adminId": "admin-1",
     "adminName": "Admin User",
-    "action": "Featured Job Listing",
-    "targetType": "job",
-    "targetId": "j1",
-    "targetName": "React Frontend Developer",
-    "timestamp": "2025-05-27T09:15:00.000Z"
+    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
+    "targetType": "applications_sync",
+    "targetId": "sync_1782584380202",
+    "targetName": "Google Sheets Applicants"
   },
   {
     "id": "log4",
-    "timestamp": "2026-06-10T19:19:14.405Z",
-    "adminId": "system",
-    "adminName": "Public Candidate Form",
-    "action": "New internship application submitted by candidate [Verification Test Candidate] for [Summer Product Management Internship] at [BuildWise]",
-    "targetType": "application",
-    "targetId": "a8",
-    "targetName": "Verification Test Candidate - Summer Product Management Internship"
+    "timestamp": "2026-06-27T18:19:59.788Z",
+    "adminId": "admin-1",
+    "adminName": "Admin User",
+    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
+    "targetType": "applications_sync",
+    "targetId": "sync_1782584399787",
+    "targetName": "Google Sheets Applicants"
   },
   {
     "id": "log5",
-    "timestamp": "2026-06-12T14:33:38.384Z",
-    "adminId": "system",
-    "adminName": "Public Candidate Form",
-    "action": "New internship application submitted by candidate [Muneeb Shoaib] for [Summer Product Management Internship] at [BuildWise]",
-    "targetType": "application",
-    "targetId": "a9",
-    "targetName": "Muneeb Shoaib - Summer Product Management Internship"
-  },
-  {
-    "id": "log6",
-    "timestamp": "2026-06-12T16:17:53.477Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Updated application status for [Chloe Dupont] from [REVIEWED] to [INTERVIEW]",
-    "targetType": "application",
-    "targetId": "a3",
-    "targetName": "Chloe Dupont - Machine Learning Research Intern"
-  },
-  {
-    "id": "log7",
-    "timestamp": "2026-06-17T18:52:48.342Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [13] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781722368341",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log8",
-    "timestamp": "2026-06-17T18:53:25.444Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Deleted application for candidate [Amina Yusuf] for role [React Frontend Developer]",
-    "targetType": "application",
-    "targetId": "a1",
-    "targetName": "Amina Yusuf - React Frontend Developer"
-  },
-  {
-    "id": "log9",
-    "timestamp": "2026-06-17T18:53:29.435Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Deleted application for candidate [John Doe] for role [Summer Product Management Internship]",
-    "targetType": "application",
-    "targetId": "a2",
-    "targetName": "John Doe - Summer Product Management Internship"
-  },
-  {
-    "id": "log10",
-    "timestamp": "2026-06-19T15:26:17.493Z",
+    "timestamp": "2026-06-27T18:19:59.812Z",
     "adminId": "admin-1",
     "adminName": "Admin User",
     "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
     "targetType": "applications_sync",
-    "targetId": "sync_1781882777487",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log11",
-    "timestamp": "2026-06-19T15:26:17.523Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781882777520",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log12",
-    "timestamp": "2026-06-19T15:26:47.563Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781882807562",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log13",
-    "timestamp": "2026-06-19T15:26:47.634Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781882807633",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log14",
-    "timestamp": "2026-06-19T15:27:34.137Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781882854136",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log15",
-    "timestamp": "2026-06-19T15:27:34.195Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781882854195",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log16",
-    "timestamp": "2026-06-19T15:31:27.532Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781883087529",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log17",
-    "timestamp": "2026-06-19T15:31:27.570Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781883087567",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log18",
-    "timestamp": "2026-06-19T15:31:57.668Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781883117666",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log19",
-    "timestamp": "2026-06-19T15:31:57.671Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781883117669",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log20",
-    "timestamp": "2026-06-19T15:37:44.248Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781883464247",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log21",
-    "timestamp": "2026-06-19T15:37:44.277Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781883464275",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log22",
-    "timestamp": "2026-06-19T15:37:48.401Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781883468397",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log23",
-    "timestamp": "2026-06-19T15:37:48.447Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781883468445",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log24",
-    "timestamp": "2026-06-20T12:46:19.298Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781959579295",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log25",
-    "timestamp": "2026-06-20T12:46:19.312Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781959579304",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log26",
-    "timestamp": "2026-06-20T13:23:04.095Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781961784094",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log27",
-    "timestamp": "2026-06-20T13:23:04.099Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781961784097",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log28",
-    "timestamp": "2026-06-20T14:34:38.678Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781966078635",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log29",
-    "timestamp": "2026-06-20T18:01:43.170Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781978503153",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log30",
-    "timestamp": "2026-06-20T18:23:41.030Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781979820893",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log31",
-    "timestamp": "2026-06-20T18:23:41.192Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781979821115",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log32",
-    "timestamp": "2026-06-20T18:28:10.492Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781980090408",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log33",
-    "timestamp": "2026-06-20T19:32:15.203Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781983935202",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log34",
-    "timestamp": "2026-06-20T19:32:15.228Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781983935227",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log35",
-    "timestamp": "2026-06-20T19:50:27.419Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781985027418",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log36",
-    "timestamp": "2026-06-20T19:50:27.466Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781985027465",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log37",
-    "timestamp": "2026-06-20T20:43:24.315Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781988204315",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log38",
-    "timestamp": "2026-06-20T20:43:24.321Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1781988204320",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log39",
-    "timestamp": "2026-06-21T11:35:58.213Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [14] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1782041758211",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log40",
-    "timestamp": "2026-06-21T11:36:04.809Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [13] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1782041764805",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log41",
-    "timestamp": "2026-06-23T13:23:15.663Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [14] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1782220995661",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log42",
-    "timestamp": "2026-06-23T13:23:15.683Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1782220995683",
-    "targetName": "Google Sheets Applicants"
-  },
-  {
-    "id": "log43",
-    "timestamp": "2026-06-23T13:23:19.143Z",
-    "adminId": "admin-1",
-    "adminName": "Admin User",
-    "action": "Synchronized applicant sheet. Imported [0] new applicant(s).",
-    "targetType": "applications_sync",
-    "targetId": "sync_1782220999142",
+    "targetId": "sync_1782584399811",
     "targetName": "Google Sheets Applicants"
   }
 ]

@@ -222,5 +222,47 @@
     "subject": "Message from OMAHCONNECT Admin",
     "body": "Hello,\n\nI am writing to connect with you regarding your recent platform activity. [Add message details here...]\n\nBest regards,\nOMAHCONNECT Admin",
     "campaignType": "direct"
+  },
+  {
+    "id": 17,
+    "sentAt": "2026-06-27T14:01:28.741Z",
+    "status": "Sent",
+    "senderId": "admin-1",
+    "senderName": "Admin User",
+    "recipientType": "applicant",
+    "recipientGroup": null,
+    "recipientCount": 1,
+    "recipientSummary": "muneeb shoaib (muneebshoaib1212@gmail.com)",
+    "subject": "Message from OMAHCONNECT Admin",
+    "body": "Hello,\n\nI am writing to connect with you regarding your recent platform activity. [Add message details here...]\n\nBest regards,\nOMAHCONNECT Admin",
+    "campaignType": "direct"
+  },
+  {
+    "id": 18,
+    "sentAt": "2026-06-27T15:34:10.812Z",
+    "status": "Sent",
+    "senderId": "admin-1",
+    "senderName": "Admin User",
+    "recipientType": "applicant",
+    "recipientGroup": null,
+    "recipientCount": 1,
+    "recipientSummary": "muneeb shoaib (muneebshoaib1212@gmail.com)",
+    "subject": "Message from OMAHCONNECT Admin",
+    "body": "Hello,\n\nI am writing to connect with you regarding your recent platform activity. [Add message details here...]\n\nBest regards,\nOMAHCONNECT Admin",
+    "campaignType": "direct"
+  },
+  {
+    "id": 19,
+    "sentAt": "2026-06-27T18:18:48.207Z",
+    "status": "Sent",
+    "senderId": "admin-1",
+    "senderName": "Admin User",
+    "recipientType": "applicant",
+    "recipientGroup": null,
+    "recipientCount": 1,
+    "recipientSummary": "Muneeb (muneebshoaib005@gmail.com)",
+    "subject": "Message from OMAHCONNECT Admin",
+    "body": "Hello,\n\nI am writing to connect with you regarding your recent platform activity. [Add message details here...]\n\nBest regards,\nOMAHCONNECT Admin",
+    "campaignType": "direct"
   }
 ]
